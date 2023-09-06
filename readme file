@@ -1,0 +1,20 @@
+# compile the library to 'simple_math.o'
+gcc -c simple_math.c -o simple_math.o
+
+# create a static library 'libsimple_math.a' 
+ar rcs libsimple_math.a simple_math.o
+
+# link the static library 
+gcc test_app.c -L. -lsimple_math -o test_app_static
+
+# build a shared library 
+gcc -shared -o libsimple_math.so simple_math.c
+
+# link the shared library 
+gcc test_app.c -L. -lsimple_math -o test_app_shared
+
+# to run the shared library-linked app, you might need to set the library path:
+export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
+
+# run the test application linked with the shared library
+./test_app_shared
